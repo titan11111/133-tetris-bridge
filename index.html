@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>テトリスブリッジ - 谷を渡れ!</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="gameContainer">
+        <canvas id="gameCanvas"></canvas>
+
+        <div id="uiOverlay">
+            <div id="topBar">
+                <div class="ui-panel" id="scorePanel">スコア: 0</div>
+                <button id="soundToggle">🔊</button>
+                <div class="ui-panel" id="levelPanel">Lv.1</div>
+            </div>
+
+            <div class="ui-panel" id="nextPiecePanel">
+                <span style="font-size:12px;">NEXT</span>
+                <canvas id="nextCanvas" width="80" height="80"></canvas>
+            </div>
+
+            <div id="keyHint">画面スワイプ: ←→移動 / ↓ ソフト ／ ↑ or Space / ↻: 回転 ／ Shift / ⏬: ハード</div>
+
+            <div id="controlPanel">
+                <button class="ctrl-btn" id="btnLeft">◀</button>
+                <button class="ctrl-btn" id="btnDown">▼</button>
+                <button class="ctrl-btn" id="btnRight">▶</button>
+                <div style="width:12px"></div>
+                <button class="ctrl-btn action" id="btnRotate">↻</button>
+                <button class="ctrl-btn action" id="btnDrop">⏬</button>
+            </div>
+        </div>
+
+        <div id="startOverlay">
+            <h1>🏔️ テトリスブリッジ</h1>
+            <p>谷にテトリスブロックを落として橋を作ろう!<br>歩いてくるキャラが落ちないように助けてね</p>
+            <button class="big-btn" id="startBtn">スタート</button>
+        </div>
+
+        <div id="messageOverlay">
+            <div id="msgText"></div>
+            <div id="msgSub"></div>
+            <button class="big-btn" id="retryBtn">もう一度</button>
+        </div>
+    </div>
+
+<script src="script.js"></script>
+</body>
+</html>

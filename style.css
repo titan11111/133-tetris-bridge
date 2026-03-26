@@ -1,0 +1,229 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+body {
+    font-family: 'Segoe UI', 'Hiragino Sans', sans-serif;
+    background: #1a1a2e;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow: hidden;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+    overscroll-behavior: none;
+}
+
+#gameContainer {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    max-width: 900px;
+    max-height: 700px;
+}
+
+#gameCanvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    image-rendering: pixelated;
+    touch-action: none; /* ① スワイプ・スクロールを完全遮断（* の manipulation を上書き） */
+}
+
+#uiOverlay {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    pointer-events: none;
+}
+
+#topBar {
+    position: absolute;
+    top: calc(10px + env(safe-area-inset-top));
+    left: 10px; right: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    pointer-events: auto;
+}
+
+.ui-panel {
+    background: rgba(0,0,0,0.55);
+    backdrop-filter: blur(8px);
+    border: 2px solid rgba(255,255,255,0.15);
+    border-radius: 12px;
+    padding: 8px 16px;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+#nextPiecePanel {
+    position: absolute;
+    top: calc(60px + env(safe-area-inset-top));
+    right: 10px;
+    pointer-events: none;
+}
+
+#nextPiecePanel canvas {
+    display: block;
+    margin-top: 6px;
+}
+
+#controlPanel {
+    position: absolute;
+    bottom: calc(15px + env(safe-area-inset-bottom));
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    pointer-events: auto;
+}
+
+.ctrl-btn {
+    width: 58px; height: 58px;
+    border: 2px solid rgba(255,255,255,0.25);
+    border-radius: 14px;
+    background: rgba(0,0,0,0.5);
+    backdrop-filter: blur(6px);
+    color: #fff;
+    font-size: 22px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    transition: background 0.1s, transform 0.1s;
+}
+.ctrl-btn:active {
+    background: rgba(255,255,255,0.25);
+    transform: scale(0.93);
+}
+
+.ctrl-btn.action {
+    background: rgba(78, 205, 196, 0.6);
+    border-color: rgba(78, 205, 196, 0.7);
+}
+.ctrl-btn.action:active {
+    background: rgba(78, 205, 196, 0.85);
+}
+
+#startOverlay {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(4px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    pointer-events: auto;
+    z-index: 100;
+}
+
+#startOverlay h1 {
+    color: #fff;
+    font-size: clamp(24px, 5vw, 42px);
+    margin-bottom: 8px;
+    text-shadow: 0 3px 12px rgba(0,0,0,0.5);
+}
+
+#startOverlay p {
+    color: rgba(255,255,255,0.7);
+    font-size: clamp(13px, 2.5vw, 17px);
+    margin-bottom: 30px;
+    text-align: center;
+    line-height: 1.7;
+}
+
+.big-btn {
+    padding: 16px 48px;
+    font-size: 20px;
+    font-weight: 700;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    color: #fff;
+    background: linear-gradient(135deg, #FF6B6B, #ee5a24);
+    box-shadow: 0 6px 20px rgba(238,90,36,0.4);
+    transition: all 0.2s;
+    pointer-events: auto;
+}
+.big-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(238,90,36,0.5); }
+.big-btn:active { transform: translateY(1px); }
+
+#messageOverlay {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    pointer-events: auto;
+    z-index: 100;
+}
+
+#messageOverlay.show { display: flex; }
+
+#msgText {
+    color: #fff;
+    font-size: clamp(28px, 6vw, 52px);
+    font-weight: 800;
+    text-shadow: 0 4px 15px rgba(0,0,0,0.6);
+    margin-bottom: 12px;
+}
+#msgSub {
+    color: rgba(255,255,255,0.8);
+    font-size: clamp(14px, 3vw, 20px);
+    margin-bottom: 24px;
+}
+
+#keyHint {
+    position: absolute;
+    bottom: calc(85px + env(safe-area-inset-bottom));
+    left: 50%;
+    transform: translateX(-50%);
+    color: rgba(255,255,255,0.4);
+    font-size: 12px;
+    pointer-events: none;
+    white-space: nowrap;
+}
+
+#soundToggle {
+    position: absolute;
+    top: calc(12px + env(safe-area-inset-top));
+    right: 120px;
+    pointer-events: auto;
+    background: rgba(0,0,0,0.45);
+    border: 2px solid rgba(255,255,255,0.15);
+    border-radius: 10px;
+    color: #fff;
+    font-size: 18px;
+    padding: 6px 12px;
+    cursor: pointer;
+    z-index: 50;
+    backdrop-filter: blur(6px);
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+@media (max-width: 600px) {
+    .ctrl-btn { width: 50px; height: 50px; font-size: 18px; }
+    #controlPanel { gap: 7px; }
+}
